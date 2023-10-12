@@ -28,7 +28,6 @@ public class TickerList extends Fragment {
         tickerlist.add("AAPL");
         tickerlist.add("TSLA");
         tickerlist.add("SBUX");
-        tickerlist.add("NKE");
         adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, tickerlist);
         listview.setAdapter(adapter);
         return view;
