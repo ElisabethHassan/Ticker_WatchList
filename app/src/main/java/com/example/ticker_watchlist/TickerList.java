@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -25,7 +26,7 @@ public class TickerList extends Fragment {
     AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            String ticker = adapterView.getItemAtPosition(i).toString();
+            String ticker = (String) adapterView.getItemAtPosition(i);
             myViewModel.getUrl(ticker);
         }
     };
@@ -40,13 +41,12 @@ public class TickerList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ticker_list, container, false);
-        listview = (ListView) view.findViewById(R.id.listview_id);
+        listview = view.findViewById(R.id.listview_id);
         LinkedList<String> tickerlist = new LinkedList<>();
         tickerlist.add("AAPL");
         tickerlist.add("TSLA");
         tickerlist.add("SBUX");
         adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, tickerlist);
-//        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, myViewModel.getTickers().getValue());
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(clickListener);
         return view;

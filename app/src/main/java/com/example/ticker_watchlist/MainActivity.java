@@ -1,10 +1,13 @@
 package com.example.ticker_watchlist;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,5 +26,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         myViewModel = new ViewModelProvider(this).get(TickerListViewModel.class);
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION)
+                != PackageManager.PERMISSION_GRANTED){
+            String[] perms = new String[]{Manifest.permission.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION};
+            ActivityCompat.requestPermissions(this,perms, 101);
+        }
     }
 }

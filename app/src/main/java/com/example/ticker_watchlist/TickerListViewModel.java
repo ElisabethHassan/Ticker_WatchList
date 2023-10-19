@@ -11,9 +11,8 @@ import java.util.LinkedList;
 
 public class TickerListViewModel extends ViewModel {
     MutableLiveData<String> url = new MutableLiveData<>();
-    MutableLiveData<LinkedList<String>> tickers = new MutableLiveData<LinkedList<String>>();
 
-    public LiveData<String> getUrl(String s){
+    public MutableLiveData<String> getUrl(String s){
         if(url == null){
             setUrl(s);
         }
@@ -27,18 +26,4 @@ public class TickerListViewModel extends ViewModel {
         }
     }
 
-//    public LiveData<LinkedList<String>> getTickers(){
-//        if(tickers == null){
-//            setTickers();
-//        }
-//        return tickers;
-//    }
-//
-//    public void setTickers(){
-//        LinkedList<String> tickerlist = new LinkedList<>();
-//        tickerlist.add("AAPL");
-//        tickerlist.add("TSLA");
-//        tickerlist.add("SBUX");
-//        tickers.postValue(tickerlist);
-//    }
 }
