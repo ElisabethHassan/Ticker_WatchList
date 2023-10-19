@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -22,7 +23,6 @@ public class TickerList extends Fragment {
     ArrayAdapter<String> adapter;
     TickerListViewModel myViewModel;
 
-
     AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -35,6 +35,17 @@ public class TickerList extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         myViewModel = new ViewModelProvider(getActivity()).get(TickerListViewModel.class);
+        Observer<LinkedList<String>> observer = new Observer<LinkedList<String>>() {
+            @Override
+            public void onChanged(LinkedList<String> strings) {
+                LinkedList<String> tickers = myViewModel.getTickers().getValue();
+                adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, tickers);
+                listview.setAdapter(adapter);
+                listview.setOnItemClickListener(clickListener);
+            }
+        };
+
+        myViewModel.getTickers().observe(getViewLifecycleOwner(),observer);
     }
 
     @Override
@@ -42,13 +53,13 @@ public class TickerList extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ticker_list, container, false);
         listview = view.findViewById(R.id.listview_id);
-        LinkedList<String> tickerlist = new LinkedList<>();
-        tickerlist.add("AAPL");
-        tickerlist.add("TSLA");
-        tickerlist.add("SBUX");
-        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, tickerlist);
-        listview.setAdapter(adapter);
-        listview.setOnItemClickListener(clickListener);
+//        LinkedList<String> tickerlist = new LinkedList<>();
+//        tickerlist.add("AAPL");
+//        tickerlist.add("TSLA");
+//        tickerlist.add("SBUX");
+//        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, tickerlist);
+//        listview.setAdapter(adapter);
+//        listview.setOnItemClickListener(clickListener);
         return view;
     }
 

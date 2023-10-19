@@ -25,9 +25,17 @@ public class SMSReceiver extends BroadcastReceiver {
                     SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i], format);
                     String sender = currentMessage.getDisplayOriginatingAddress();
                     String message = currentMessage.getMessageBody();
+
                     String printMessage = "Sender: " + sender + " Message: " + message;
                     Log.i("SMS", printMessage);
                     Toast.makeText(context, printMessage, Toast.LENGTH_SHORT).show();
+
+                    Intent activityIntent = new Intent(context, MainActivity.class);
+                    activityIntent.putExtra("sms", message);
+                    //makes sure we can call an activity from outside an activity
+                    activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    context.startActivity(activityIntent);
+
                 }
             }
 

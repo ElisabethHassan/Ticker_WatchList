@@ -11,6 +11,9 @@ import java.util.LinkedList;
 
 public class TickerListViewModel extends ViewModel {
     MutableLiveData<String> url = new MutableLiveData<>();
+    MutableLiveData<LinkedList<String>> tickers = new MutableLiveData<>();
+    LinkedList<String> tickerlist = new LinkedList<>();
+
 
     public MutableLiveData<String> getUrl(String s){
         if(url == null){
@@ -25,5 +28,30 @@ public class TickerListViewModel extends ViewModel {
             url.setValue(urlLink);
         }
     }
+
+    public MutableLiveData<LinkedList<String>> getTickers(){
+        if (tickers == null){
+            setTickers();
+        }
+        return tickers;
+    }
+
+    public void setTickers(){
+        if(tickers == null){
+            tickerlist.add("AAPL");
+            tickerlist.add("TSLA");
+            tickerlist.add("SBUX");
+            tickers.setValue(tickerlist);
+        }
+    }
+
+    public void addTickers(String ticker){
+        if(tickerlist.size() <= 6){
+            tickerlist.add(ticker);
+            tickers.setValue(tickerlist);
+        }
+        //TODO: Let entries past 6, replace the beginning
+    }
+
 
 }

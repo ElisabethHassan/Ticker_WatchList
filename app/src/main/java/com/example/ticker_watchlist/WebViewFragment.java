@@ -45,6 +45,5 @@ public class WebViewFragment extends Fragment {
         };
         myViewModel.url.observe(getViewLifecycleOwner(),observer);
 
-
     }
 }
