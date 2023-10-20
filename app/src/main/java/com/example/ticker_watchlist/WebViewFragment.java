@@ -17,17 +17,17 @@ public class WebViewFragment extends Fragment {
     WebView webview;
     TickerListViewModel myViewModel;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_web_view, container, false);
-        webview = (WebView) view.findViewById(R.id.webview_id);
-
-        webview.loadUrl("https://seekingalpha.com/symbol/TSLA");
-
+        webview = view.findViewById(R.id.webview_id);
         return view;
+    }
+
+    //loads the webview with the url
+    public void loadUrl(String url){
+        webview.loadUrl(url);
     }
 
 
@@ -35,15 +35,22 @@ public class WebViewFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         myViewModel = new ViewModelProvider(getActivity()).get(TickerListViewModel.class);
+        webview.getSettings().setJavaScriptEnabled(true);
+        loadUrl("https://seekingalpha.com/");
 
+        //loads the url based on the selected ticker
         Observer<String> observer = new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                webview.loadUrl(myViewModel.getUrl(s).getValue());
-                webview.getSettings().setJavaScriptEnabled(true);
+                if (s != null){
+                    String url = "https://seekingalpha.com/symbol/" + s;
+                    loadUrl(url);
+                } else {
+                    loadUrl("https://seekingalpha.com/");
+                }
             }
         };
-        myViewModel.url.observe(getViewLifecycleOwner(),observer);
+        myViewModel.getSelectedTicker().observe(getViewLifecycleOwner(),observer);
 
     }
 }

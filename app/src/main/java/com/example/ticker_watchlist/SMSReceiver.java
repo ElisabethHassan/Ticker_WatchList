@@ -23,12 +23,8 @@ public class SMSReceiver extends BroadcastReceiver {
 
                 for (int i = 0; i < pdusObj.length; i++){
                     SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i], format);
-                    String sender = currentMessage.getDisplayOriginatingAddress();
                     String message = currentMessage.getMessageBody();
 
-                    String printMessage = "Sender: " + sender + " Message: " + message;
-                    Log.i("SMS", printMessage);
-                    Toast.makeText(context, printMessage, Toast.LENGTH_SHORT).show();
 
                     Intent activityIntent = new Intent(context, MainActivity.class);
                     activityIntent.putExtra("sms", message);

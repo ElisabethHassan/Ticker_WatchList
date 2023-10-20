@@ -24,13 +24,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra("sms");
 
-
+        //sets up fragments
         fg = getSupportFragmentManager();
         if (savedInstanceState == null) {
             fg.beginTransaction().replace(R.id.topTicker_id, new TickerList()).commit();
             fg.beginTransaction().replace(R.id.bottomWeb_id, new WebViewFragment()).commit();
         }
         myViewModel = new ViewModelProvider(this).get(TickerListViewModel.class);
+
+        //sets up SMS permissions
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECEIVE_SMS)
                 != PackageManager.PERMISSION_GRANTED){
             String[] perms = new String[]{android.Manifest.permission.RECEIVE_SMS};
@@ -38,11 +40,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override //will execute code whenever you get new intent (allow work with single task activities
+    @Override //will execute code whenever you get new intent (allow work with single task activities)
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String message = intent.getStringExtra("sms");
-        //TODO: take care of validation
+
         //SMS without the correct format
         if(!message.contains("Ticker:<<") || !message.contains(">>")){
             recreate();
@@ -57,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
             } else { //The ticker is valid and in the correct format
                 recreate();
                 myViewModel.addTickers(ticker);
-                myViewModel.getUrl(ticker);
+                myViewModel.setSelectedTicker(ticker);
             }
         }
-
     }
 
+    //takes in ticker and checks if it is valid
     public boolean isValidTicker(String ticker){
         for (int i = 0; i < ticker.length(); i++){
             if((Character.isLetter(ticker.charAt(i)) == false)) return false;

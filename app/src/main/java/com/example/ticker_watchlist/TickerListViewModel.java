@@ -10,34 +10,30 @@ import androidx.lifecycle.ViewModel;
 import java.util.LinkedList;
 
 public class TickerListViewModel extends ViewModel {
-    MutableLiveData<String> url = new MutableLiveData<>();
     MutableLiveData<LinkedList<String>> tickers = new MutableLiveData<>();
     LinkedList<String> tickerlist = new LinkedList<>();
+    MutableLiveData<String> selectedTicker = new MutableLiveData<>();
 
 
-    public MutableLiveData<String> getUrl(String s){
-        if(url == null){
-            setUrl(s);
-        }
-        return url;
+    //sets the ticker that is selected
+    public void setSelectedTicker(String ticker){
+        selectedTicker.setValue(ticker);
     }
 
-    public void setUrl(String s){
-        if (url == null){
-            String urlLink = "https://seekingalpha.com/symbol/" + s;
-            url.setValue(urlLink);
-        }
+    //returns the ticker that is selected
+    public LiveData<String> getSelectedTicker(){
+        return selectedTicker;
     }
 
-    public MutableLiveData<LinkedList<String>> getTickers(){
-        if (tickers == null){
-            setTickers();
-        }
+
+    public LiveData<LinkedList<String>> getTickers(){
+        if (tickerlist.size() == 0) setTickers();
+
         return tickers;
     }
 
     public void setTickers(){
-        if(tickers == null){
+        if(tickerlist.size() == 0){
             tickerlist.add("AAPL");
             tickerlist.add("TSLA");
             tickerlist.add("SBUX");
@@ -46,11 +42,12 @@ public class TickerListViewModel extends ViewModel {
     }
 
     public void addTickers(String ticker){
-        if(tickerlist.size() <= 6){
+        if(tickerlist.size() >= 6 && !tickerlist.contains(ticker)){
+            tickerlist.set(5, ticker);
+        } else if(tickerlist.size() < 6 && !tickerlist.contains(ticker)) {
             tickerlist.add(ticker);
             tickers.setValue(tickerlist);
         }
-        //TODO: Let entries past 6, replace the beginning
     }
 
 
