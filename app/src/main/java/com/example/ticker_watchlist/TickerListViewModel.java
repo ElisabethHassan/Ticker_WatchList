@@ -13,6 +13,7 @@ public class TickerListViewModel extends ViewModel {
     MutableLiveData<LinkedList<String>> tickers = new MutableLiveData<>();
     LinkedList<String> tickerlist = new LinkedList<>();
     MutableLiveData<String> selectedTicker = new MutableLiveData<>();
+    int currentIndex = 0;
 
 
     //sets the ticker that is selected
@@ -41,9 +42,22 @@ public class TickerListViewModel extends ViewModel {
         }
     }
 
+    //once list hits 6 entries changes the 6th to the new update
+//    public void addTickers(String ticker){
+//        if(tickerlist.size() >= 6 && !tickerlist.contains(ticker)){
+//            tickerlist.set(5, ticker);
+//        } else if(tickerlist.size() < 6 && !tickerlist.contains(ticker)) {
+//            tickerlist.add(ticker);
+//            tickers.setValue(tickerlist);
+//        }
+//    }
+
+    //Round Robin Implementation
     public void addTickers(String ticker){
+
         if(tickerlist.size() >= 6 && !tickerlist.contains(ticker)){
-            tickerlist.set(5, ticker);
+            tickerlist.set(currentIndex, ticker);
+            currentIndex = (currentIndex + 1) % 6;
         } else if(tickerlist.size() < 6 && !tickerlist.contains(ticker)) {
             tickerlist.add(ticker);
             tickers.setValue(tickerlist);

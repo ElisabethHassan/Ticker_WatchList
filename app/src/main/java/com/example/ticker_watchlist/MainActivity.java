@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -38,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
             String[] perms = new String[]{android.Manifest.permission.RECEIVE_SMS};
             ActivityCompat.requestPermissions(this,perms, 101);
         }
+
+//        SharedPreferences settings = getSharedPreferences("myPref", 0);
+//        SharedPreferences.Editor editor = settings.edit();
+//        editor.
+
     }
 
     @Override //will execute code whenever you get new intent (allow work with single task activities)
@@ -71,5 +77,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+
+
 
 }
