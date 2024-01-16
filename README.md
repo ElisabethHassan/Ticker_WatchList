@@ -11,7 +11,7 @@ To run the program, please follow these steps:
 1. **Clone the repository in Android Development:**
 
    ```bash
-   git clone https://github.com/ElisabethHassan/SeoProject2.git
+   git clone https://github.com/ElisabethHassan/Ticker_WatchList
    ```
 
 2. **Run Virtual Device Emulator:**
