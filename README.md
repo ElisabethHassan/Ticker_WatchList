@@ -1,4 +1,4 @@
-# Ticker Watchlist
+# Ticker Watchlist Manager
 
 This program reads SMS messages and searches them for Ticker symbols. After reading a valid Ticker Symbol, 
 the app will add the Symbol to a bookmark list. Additionally, the user is able to open the info page of 
@@ -19,7 +19,8 @@ To run the program, please follow these steps:
 
 ## Technologies Used
 
-The AI-Security Net project incorporates the following technologies:
+This project incorporates the following technologies:
 
 * Java - a high-level programming language known for its simplicity and readability.
+* Android Development - official integrated development environment for Google's Android operating system
 * Seeking Alpha Website - site with information on stocks and finances (https://seekingalpha.com)
