@@ -14,7 +14,7 @@ To run the program, please follow these steps:
    git clone https://github.com/ElisabethHassan/Ticker_WatchList
    ```
 
-2. **Run Virtual Device Emulator:**
+2. **Run Virtual Device Emulator**
 
 
 ## Technologies Used
